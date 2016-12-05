@@ -1,0 +1,4 @@
+import api;
+
+String getKindOfOp(Operation c):
+	c.metaType.toString().subString(5,c.metaType.toString().length).toLowerCase();

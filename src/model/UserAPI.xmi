@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api:Swagger
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:api="http://sma.api"
+    xsi:schemaLocation="http://sma.api ../metamodels/api.ecore">
+  <contains
+      host="localhost"
+      description="API for the users"
+      basePath="/api/"
+      version="1.0"
+      bdserver="localhost"
+      bduser="root"
+      bdpass="123456789"
+      bdname="sma"
+      apiName="Personas">
+    <contains
+        xsi:type="api:GET"
+        title="Users"
+        description="GET all users in the DB"
+        path="/users/">
+      <responses
+          code_status="200"
+          description="Success">
+        <contains>
+          <compose
+              name="Person">
+            <compose
+                name="Name"/>
+            <compose
+                name="DNI"/>
+          </compose>
+        </contains>
+      </responses>
+    </contains>
+    <contains
+        xsi:type="api:GET"
+        title="User"
+        description="GET one user in the DB"
+        path="/user/">
+      <responses
+          code_status="200"
+          description="Success">
+        <contains>
+          <compose
+              name="Person">
+            <compose
+                name="Name"/>
+            <compose
+                name="DNI"/>
+          </compose>
+        </contains>
+      </responses>
+      <parameters
+          name="DNI"
+          compulsory="true"/>
+    </contains>
+    <contains
+        xsi:type="api:POST"
+        title="User"
+        description="Creates a new user"
+        path="/user">
+      <responses
+          code_status="201"
+          description="User successfully created">
+        <contains>
+          <compose
+              name="Person">
+            <compose
+                name="Name"/>
+            <compose
+                name="DNI"/>
+          </compose>
+        </contains>
+      </responses>
+      <parameters
+          name="Name"
+          compulsory="true"/>
+      <parameters
+          name="DNI"
+          compulsory="true"/>
+    </contains>
+  </contains>
+</api:Swagger>

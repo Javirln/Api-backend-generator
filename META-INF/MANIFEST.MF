@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ApiGenerator
-Bundle-SymbolicName: ApiGenerator; singleton:=true
+Bundle-Name: project.api2php.generator
+Bundle-SymbolicName: project.api2php.generator; singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: org.eclipse.xtend.profiler;resolution:=optional,
  org.apache.commons.logging,

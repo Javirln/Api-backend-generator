@@ -1,0 +1,7 @@
+import api;
+
+String getKindOfOp(Operation c):
+	c.metaType.toString().subString(5,c.metaType.toString().length).toLowerCase();
+	
+String getKindOfOpJava(Operation c):
+	"RequestMethod."+c.metaType.toString().subString(5,c.metaType.toString().length).toUpperCase();

@@ -1,0 +1,183 @@
+«IMPORT api»
+«EXTENSION template::api2javaExtension»
+
+«DEFINE main FOR Swagger»
+	«FILE "readme.txt"»
+		«EXPAND generateReadme FOR contains»
+	«ENDFILE»
+	«FILE "pom.xml"»
+		«EXPAND generatePom FOR contains»
+	«ENDFILE»
+	«FILE "ApiApplication.jav"»
+		«EXPAND generateServer FOR contains»
+	«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE generateReadme FOR SpecificationAPI»
+Hi! There are some instructions that you should follow to deploy your API.
+
+1- Copy and paste pom.xml file to root folder of your project.
+2- Copy and paste ApiApplication.jav to src/main/java/sma folder into your project folder.
+3- Rename ApiApplication.jav to ApiApplication.java.
+4- Make sure you have Java and Maven installed in your system
+5- Import the SQL file generated "db.sql" to your DBMS
+6- Run 'mvn spring-boot:run'
+7- Open your browser and go to http://«host»«basePath»
+«ENDDEFINE»
+
+«DEFINE generatePom FOR SpecificationAPI»
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sma</groupId>
+	<artifactId>api</artifactId>
+	<version>«version»</version>
+	<packaging>jar</packaging>
+	<name>api</name>
+	<description>SMA</description>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.jooq</groupId>
+		    <artifactId>jooq</artifactId>
+		    <version>3.8.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+«ENDDEFINE»
+
+«DEFINE generateServer FOR SpecificationAPI»
+package sma;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import org.jooq.impl.DSL;
+
+@SpringBootApplication
+@Controller
+@EnableAutoConfiguration
+public class ApiApplication {
+
+	public static void main(String[] args) {
+		try{
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		}catch(Exception oops){
+			System.out.println("There was an error with driver registration.");
+		}finally{
+			SpringApplication.run(ApiApplication.class, args);
+		}
+	}
+	
+	public Connection getConnection(){
+		Connection conn = null;
+		try{
+			conn = DriverManager.getConnection("jdbc:mysql://«bdserver»/«bdname»?" +
+                                   "user=«bduser»&password=«bdpass»");
+		}catch(SQLException oops){
+			System.out.println("There was an error when connect to database.");
+		}
+		return conn;
+	}
+   
+   	@RequestMapping("/")
+	@ResponseBody
+	String welcome() {
+	   return "OK, your server is running.";
+	}
+   
+    «EXPAND generateOperations FOREACH contains»
+}
+«ENDDEFINE»
+
+«DEFINE generateOperations FOR Operation»
+«EXPAND methodHeader FOR this »{
+	String json = null;
+	Statement stmt = null;
+	ResultSet rs = null;
+	try {
+		Connection conn = getConnection();
+    	stmt = conn.createStatement();
+        «EXPAND generateQuery(this) FOREACH responses»
+    
+		json = DSL.using(conn).fetch(rs).formatJSON();
+	}catch (SQLException ex){
+        System.out.println("There was an error with SQL.");
+	}finally {
+	    if (rs != null) {
+	        try {
+	            rs.close();
+	        } catch (SQLException sqlEx) { }
+	        rs = null;
+    	}
+    	if (stmt != null) {
+        	try {
+            	stmt.close();
+        	} catch (SQLException sqlEx) { } // ignore
+		        stmt = null;
+    	}
+	}
+	
+   return json;
+}
+«ENDDEFINE»
+
+«DEFINE methodHeader FOR Operation»
+	@RequestMapping(value="«path»", method=«getKindOfOpJava(this)»)
+	@ResponseBody
+	public String «title»(«FOREACH parameters AS parameter SEPARATOR ","»@RequestParam(required=«parameter.compulsory») «parameter.type» «parameter.name»«ENDFOREACH»)
+«ENDDEFINE»
+
+«DEFINE generateQuery(Operation operation) FOR Response»
+	«IF getKindOfOp(operation) == 'get'»
+		«FOREACH contains.compose AS class»
+			«IF operation.parameters.isEmpty»
+			if (stmt.execute("SELECT «FOREACH class.compose AS atribute SEPARATOR ","»«atribute.name»«ENDFOREACH» FROM «class.name»")) {rs = stmt.getResultSet();}
+			«ELSE»
+			String query = "SELECT «FOREACH class.compose AS atribute SEPARATOR ","»«atribute.name»«ENDFOREACH» FROM «class.name» WHERE «FOREACH operation.parameters AS parameter SEPARATOR "+\" AND "»«parameter.name»='"+«parameter.name»+"'"«ENDFOREACH»;
+			if (stmt.execute(query)) {rs = stmt.getResultSet();}
+			«ENDIF»
+		«ENDFOREACH»
+	«ENDIF»
+«ENDDEFINE»
+

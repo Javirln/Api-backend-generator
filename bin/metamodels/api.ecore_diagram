@@ -265,10 +265,6 @@
         <element xmi:type="ecore:EAttribute" href="api.ecore#//SpecificationAPI/bdname"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_xd9ugbiOEeacOYPTev4F2w"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_6nxZMLrfEeafLabVNYFVgg" type="3001">
-        <element xmi:type="ecore:EAttribute" href="api.ecore#//SpecificationAPI/apiName"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_6nxZMbrfEeafLabVNYFVgg"/>
-      </children>
       <styles xmi:type="notation:SortingStyle" xmi:id="_GeQFUrDXEeaRv_ia2v6qSw"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_GeQFU7DXEeaRv_ia2v6qSw"/>
       <layoutConstraint xmi:type="notation:Ratio" xmi:id="_LkZfwLDXEeaRv_ia2v6qSw" value="0.23076923076923078"/>

@@ -103,7 +103,7 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_oXw3M7G4EeaboLSXQviEEg"/>
     </children>
     <element xmi:type="ecore:EAnnotation" href="db.ecore#//%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oXwQIbG4EeaboLSXQviEEg" x="783" y="540"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oXwQIbG4EeaboLSXQviEEg" x="775" y="530"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_0BmoILG4EeaboLSXQviEEg" type="2001" fontName=".SF NS Text">
     <children xmi:type="notation:DecorationNode" xmi:id="_0BmoIrG4EeaboLSXQviEEg" type="5001"/>
@@ -165,7 +165,7 @@
       <layoutConstraint xmi:type="notation:Ratio" xmi:id="_2vWn0LG4EeaboLSXQviEEg" value="0.23076923076923078"/>
     </children>
     <element xmi:type="ecore:EClass" href="db.ecore#//ForeignKey"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1tMnQbG4EeaboLSXQviEEg" x="333" y="495"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1tMnQbG4EeaboLSXQviEEg" x="240" y="480"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_27vc8ajDEeaLnbUkUNpveQ"/>
   <element xmi:type="ecore:EPackage" href="db.ecore#/"/>
@@ -209,7 +209,7 @@
       <layoutConstraint xmi:type="notation:Location" xmi:id="_6BtwdLG4EeaboLSXQviEEg" x="-3" y="25"/>
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="_6BtwdbG4EeaboLSXQviEEg" type="6003">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_6BtwdrG4EeaboLSXQviEEg" x="20" y="21"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6BtwdrG4EeaboLSXQviEEg" x="-11" y="-18"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_6BtwcbG4EeaboLSXQviEEg" fontName=".SF NS Text"/>
     <element xmi:type="ecore:EReference" href="db.ecore#//Columna/columnas"/>
@@ -218,14 +218,14 @@
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_DOFZYLG5EeaboLSXQviEEg" type="4002" source="_0BmoILG4EeaboLSXQviEEg" target="_EmcSYKjEEeaLnbUkUNpveQ">
     <children xmi:type="notation:DecorationNode" xmi:id="_DOFZY7G5EeaboLSXQviEEg" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_DOFZZLG5EeaboLSXQviEEg" x="-53" y="5"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_DOFZZLG5EeaboLSXQviEEg" x="-43" y="-8"/>
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="_DOFZZbG5EeaboLSXQviEEg" type="6003">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_DOFZZrG5EeaboLSXQviEEg" x="12" y="-20"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_DOFZZrG5EeaboLSXQviEEg" x="22" y="-15"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_DOFZYbG5EeaboLSXQviEEg" fontName=".SF NS Text"/>
     <element xmi:type="ecore:EReference" href="db.ecore#//Constraint/constraints"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DOFZYrG5EeaboLSXQviEEg" points="[30, -9, -298, -177]$[195, -53, -133, -221]$[308, 136, -20, -32]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DOFZYrG5EeaboLSXQviEEg" points="[39, 9, -164, -114]$[49, 9, -154, -114]$[203, 9, 0, -114]$[203, 91, 0, -32]"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DOHOkLG5EeaboLSXQviEEg" id="(0.20634920634920634,0.32653061224489793)"/>
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_NhmQkLG5EeaboLSXQviEEg" type="4003" source="__j_FIKjDEeaLnbUkUNpveQ" target="_0BmoILG4EeaboLSXQviEEg">

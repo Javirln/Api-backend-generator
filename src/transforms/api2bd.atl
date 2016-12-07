@@ -1,0 +1,40 @@
+-- @path MMDB=/project.api2php.generator/src/metamodels/db.ecore
+-- @path MMAPI=/project.api2php.generator/src/metamodels/api.ecore
+
+module api2bd;
+create OUTDB : MMDB from INAPI : MMAPI;
+
+--helper context INAPI!ModelOfResponse def : getNameUnique() : Set(String) =
+--	self.contains->collect(c|c.name).asSet();
+
+rule attribute2column{
+	from
+	INAPI:MMAPI!Attribute
+	to
+	OUTDB:MMDB!Columna(
+		nombre <- INAPI.name,
+		tipo <- INAPI.value
+	),
+	OUTD:MMDB!PrimaryKey(
+		name <- INAPI.name
+	)
+}
+
+rule class2table{
+	from
+	INAPI:MMAPI!Class
+	to
+	OUTDB: MMDB!Tabla(
+		nombre <- INAPI.name,
+		columnas <- INAPI.compose
+	)
+}
+
+rule swagger2schema{
+	from
+	INAPI:MMAPI!Swagger
+	to
+	OUTDB:MMDB!EsquemaBD(
+		tablas <- INAPI.contains
+	)
+}
